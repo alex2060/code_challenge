@@ -1,0 +1,89 @@
+
+
+
+<style>
+  table {
+    border-collapse: collapse;
+  }
+  th, td {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: left;
+  }
+</style>
+
+
+<button onclick="loadback()">Previous page</button><button onclick="loadplus()">Next Page</button>
+
+<div id = "table" >
+
+</div>
+
+
+
+
+
+
+
+<script>
+//get table form sting
+var val = "NONE*C?NONE*C?NONE*C?NONE*C?C*C?@,NONE*M?NONE*C?@NONE*M?NONE*C?NONE*L?B1*L?B2*L?B3*L?B4*L?B5*L?NONE*L?NONE*L?NONE*M?@M*M?NONE*C?C*L?NONE*L?C*L?NONE*L?NONE*L?NONE*L?NONE*L?NONE*L?NONE*M?@,";
+
+
+pages = "";
+couter=0;
+
+function load(A,B){
+	pages = val.split(",")
+	for (let i = 0; i <= pages.length-1; i++) {
+		console.log(pages[i]);
+		pages[i]=pages[i].split("@");
+		for (let j = 0; j <= pages[i].length-1; j++) {
+			pages[i][j]=pages[i][j].split("?");
+			for (let z = 0; z <= pages[i][j].length-1; z++) {
+				vals=pages[i][j][z].split("*");
+				pages[i][j][z]=[vals[0],vals[1]];
+			}
+			pages[i][j].pop()
+		}
+		pages[i].pop()
+	}
+	pages.pop()
+	console.log(pages);
+}
+//load table 1
+function loadback(){
+	if (couter!=0) {
+		couter=couter-1;
+	}
+	outsting = " <table> "
+	for (let i = 0; i <= pages[couter].length-1; i++) {
+		outsting+= " <tr> "
+		for (let j = 0; j <= pages[couter][i].length-1; j++) {
+			outsting+="<td>"+pages[couter][i][j][0]+" in "+ pages[couter][i][j][1]+"</td>"
+		}
+		outsting+= " </tr> "
+	}
+	outsting+= " </table> "
+	document.getElementById("table").innerHTML  = outsting;
+}
+function loadplus() {
+	if (couter<=pages.length-2) {
+		couter=couter+1;
+	}
+	console.log(couter);
+	outsting = " <table> "
+	for (let i = 0; i <= pages[couter].length-1; i++) {
+		outsting+= " <tr> "
+		for (let j = 0; j <= pages[couter][i].length-1; j++) {
+			outsting+="<td>"+pages[couter][i][j][0]+" in "+ pages[couter][i][j][1]+"</td>"
+		}
+		outsting+= " </tr> "
+	}
+	outsting+= " </table> "
+	document.getElementById("table").innerHTML  = outsting;
+}
+
+load(val,"");
+loadback();
+</script>

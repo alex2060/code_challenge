@@ -1,0 +1,103 @@
+
+
+
+<style>
+  table {
+    border-collapse: collapse;
+  }
+  th, td {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: left;
+  }
+</style>
+
+
+<button onclick="loadback()">Previous pages</button><button onclick="loadplus()">Next Page</button>
+
+<div id = "table" ></div>
+
+
+
+
+<script>
+//get table form sting
+
+pages = "";
+
+
+
+
+
+function load(A,B){
+	out=A.split("(???)")
+	repval = out[1];
+
+	pages = repval.split(",")
+	for (let i = 0; i <= pages.length-1; i++) {
+		console.log(pages[i]);
+		pages[i]=pages[i].split("@");
+		for (let j = 0; j <= pages[i].length-1; j++) {
+			pages[i][j]=pages[i][j].split("?");
+			for (let z = 0; z <= pages[i][j].length-1; z++) {
+				vals=pages[i][j][z].split("*");
+				pages[i][j][z]=[vals[0],vals[1]];
+			}
+			pages[i][j].pop()
+		}
+		pages[i].pop()
+	}
+	pages.pop()
+	console.log(pages);
+	loadback();
+}
+//load table 1
+function loadback(){
+	if (couter!=0) {
+		couter=couter-1;
+	}
+	outsting = " <table> "
+	for (let i = 0; i <= pages[couter].length-1; i++) {
+		outsting+= " <tr> "
+		for (let j = 0; j <= pages[couter][i].length-1; j++) {
+			outsting+="<td>"+pages[couter][i][j][0]+" in "+ pages[couter][i][j][1]+"</td>"
+		}
+		outsting+= " </tr> "
+	}
+	outsting+= " </table> "
+	document.getElementById("table").innerHTML  = outsting;
+}
+function loadplus() {
+	if (couter<=pages.length-2) {
+		couter=couter+1;
+	}
+	console.log(couter);
+	outsting = " <table> "
+	for (let i = 0; i <= pages[couter].length-1; i++) {
+		outsting+= " <tr> "
+		for (let j = 0; j <= pages[couter][i].length-1; j++) {
+			outsting+="<td>"+pages[couter][i][j][0]+" in "+ pages[couter][i][j][1]+"</td>"
+		}
+		outsting+= " </tr> "
+	}
+	outsting+= " </table> "
+	document.getElementById("table").innerHTML  = outsting;
+}
+
+
+function post_responce(path,func,varible){
+
+  console.log(path);
+  fetch(path).then(
+      ( response) => {
+          return response.text();
+      })
+      .then((html) => {
+          func(  html.trim()  , varible )
+      });
+}
+
+post_responce("http://alexhaussmann.com/adhaussmann/a_final/get_post_dev.php?key=54ed0eaabc535520bef6caaa8e8959af0ce321d48c007b2751768100ead64020&type=all",load,"varible");
+couter=0;
+
+</script>
