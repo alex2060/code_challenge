@@ -2,7 +2,6 @@
 #garage
 """
 used to add and remove cars form spots in a parking garage
-
 depends on and uses floors and spots
 """
 class garage:
@@ -167,7 +166,6 @@ class floor:
 #spot
 """
 a spot in the garage used in floor
-
 """
 class spot:
 	#type_of_space - > the tpye of space it is
@@ -213,9 +211,10 @@ def test():
 	output[9]= parking.remove_spot(1,2,3)
 	output[10]=parking.add_parking(1,2,4,"C") 
 	output[11]=parking.add_parking(1,1,3,"B") 
+	cartest    = parking.add_parking(0,0,0,"C")
 	output[12]=parking.make_sting_for_database()
 
-	cartest    = parking.add_parking(0,0,0,"C") 
+ 
 	cycal_test = parking.add_parking(0,0,0,"M") 
 	assert output[0 ]=="ADDED"
 	assert output[1 ]=="Removed"
@@ -237,10 +236,6 @@ def test():
 
 
 test()
-
-
-
-
 
 
 
